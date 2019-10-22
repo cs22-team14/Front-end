@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-
 // Material UI imports
 import Fab from "@material-ui/core/Fab";
 import {
@@ -9,14 +8,20 @@ import {
   ArrowUpward
 } from "@material-ui/icons";
 
+import Room from "./Room";
 import axiosWithAuth from "../utils/axiosWithAuth";
+
+import "./Map.scss";
 
 const Map = props => {
   const [player, setPlayer] = useState({
     id: "",
     name: "",
-    title: "",
-    currentRoom: {}
+    currentRoom: {
+      title: "",
+      description: "",
+      players: ""
+    }
   });
   const [grid, setGrid] = useState([]);
   const [rooms, setRooms] = useState([]);
@@ -27,10 +32,13 @@ const Map = props => {
       .then(res => {
         console.log("GET Player", res);
         setPlayer({
-          id: res.data.id,
+          id: res.data.uuid,
           name: res.data.name,
-          title: res.data.title,
-          currentRoom: res.data.currentRoom
+          currentRoom: {
+            title: res.data.title,
+            description: res.data.description,
+            players: res.data.players
+          }
         });
         return axiosWithAuth().get(
           "https://lambda-mud-test.herokuapp.com/api/adv/rooms"
@@ -38,6 +46,7 @@ const Map = props => {
       })
       .then(res => {
         setRooms(res.data);
+        generateMap();
       })
       .catch(err => {
         console.log(err);
@@ -114,15 +123,20 @@ const Map = props => {
 
   return (
     <div className="map-wrapper">
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "flex-start",
-          marginLeft: "40px"
-        }}
-      >
+      <div className="grid-wrapper">
+        <div className="grid">
+          {grid.length > 0 ? (
+            grid.map(row => {
+              return row.map(room => {
+                return <Room room={room} id={rooms.id} />; // pass active id
+              });
+            })
+          ) : (
+            <p>Still Loading</p>
+          )}
+        </div>
+      </div>
+      <div className="control-panel">
         {/* <button
           style={{ marginTop: "80px", width: "200px", height: "50px" }}
           onClick={this.logOut}
@@ -131,15 +145,7 @@ const Map = props => {
           Log Out{" "}
         </button> */}
 
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            marginTop: "100px"
-          }}
-        >
+        <div className="directions">
           <Fab size="medium" color="secondary" onClick={() => goNorth()}>
             <ArrowUpward />
           </Fab>

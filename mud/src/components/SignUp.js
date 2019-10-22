@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 
 // still need to convert to hooks / functional
 import {
@@ -15,7 +16,8 @@ class SignUp extends React.Component {
   state = {
     creds: {
       userName: "",
-      password: ""
+      password: "",
+      password2: ""
     }
   };
 
@@ -29,8 +31,26 @@ class SignUp extends React.Component {
   };
   userSignup = e => {
     e.preventDefault();
-    this.props.sign_up(this.state.creds);
-    this.props.history.push("/Login");
+    const creds = {
+      userName: this.state.userName,
+      password1: this.state.password,
+      password2: this.state.password2
+    };
+    axios
+      .post("/api/register", creds)
+      .then(res => {
+        console.log(res);
+        this.props.history.push("/home");
+        localStorage.setItem("token", res.data.key);
+        this.setState({
+          userName: "",
+          password: "",
+          password2: ""
+        });
+      })
+      .catch(err => {
+        console.log(`Error: ${err}`);
+      });
   };
   render() {
     return (
@@ -53,7 +73,7 @@ class SignUp extends React.Component {
                       success="right"
                       name="email"
                       value={this.state.creds.email}
-                      onChange={this.handleChange}
+                      onChange={this.handleChanges}
                     />
                     <MDBInput
                       // icon="lock"
@@ -64,7 +84,18 @@ class SignUp extends React.Component {
                       validate
                       name="password"
                       value={this.state.creds.password}
-                      onChange={this.handleChange}
+                      onChange={this.handleChanges}
+                    />
+                    <MDBInput
+                      // icon="lock"
+                      id="password2"
+                      label="Your password"
+                      group
+                      type="password"
+                      validate
+                      name="password2"
+                      value={this.state.creds.password2}
+                      onChange={this.handleChanges}
                     />
                     <div className="text-center mt-3">
                       <MDBBtn id="login-btn" color="primary" type="submit">

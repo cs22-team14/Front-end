@@ -1,0 +1,31 @@
+.map-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .grid-wrapper {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap-reverse;
+    .grid {
+      width: 700px;
+      height: 700px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap-reverse;
+    }
+  }
+  .control-panel {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    margin-left: 50px;
+    .directions {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin-top: 100px;
+    }
+  }
+}

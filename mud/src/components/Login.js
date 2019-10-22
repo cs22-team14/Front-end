@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 import axiosWithAuth from "../utils/axiosWithAuth";
 
 import {
@@ -14,7 +15,7 @@ import {
 class Login extends React.Component {
   state = {
     creds: {
-      email: "",
+      username: "",
       password: ""
     }
   };
@@ -32,8 +33,12 @@ class Login extends React.Component {
   login = e => {
     e.preventDefault();
     console.log("logging in");
-    axiosWithAuth()
-      .post("/api/login", this.state.creds)
+    console.log(this.state.creds);
+    axios
+      .post(
+        "https://lambda-mud-test.herokuapp.com/api/login/",
+        this.state.creds
+      )
       .then(res => {
         localStorage.setItem("token", res.data.token);
         this.props.history.push("/home");
@@ -55,16 +60,14 @@ class Login extends React.Component {
                     <p className="h4 text-center py-4">Please Login</p>
                     <MDBInput
                       // icon="envelope"
-                      id="email"
-                      label="Your email"
+                      id="username"
+                      label="Your username"
                       group
-                      type="email"
+                      // type="email"
                       validate
-                      error="wrong"
-                      success="right"
-                      name="email"
-                      value={this.state.creds.email}
-                      onChange={this.handleChange}
+                      name="username"
+                      value={this.state.creds.username}
+                      onChange={this.handleChanges}
                     />
                     <MDBInput
                       // icon="lock"
@@ -75,7 +78,7 @@ class Login extends React.Component {
                       validate
                       name="password"
                       value={this.state.creds.password}
-                      onChange={this.handleChange}
+                      onChange={this.handleChanges}
                     />
                     <div className="text-center mt-3">
                       <MDBBtn id="login-btn" color="primary" type="submit">
