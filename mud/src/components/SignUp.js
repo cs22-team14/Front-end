@@ -15,8 +15,8 @@ import {
 class SignUp extends React.Component {
   state = {
     creds: {
-      userName: "",
-      password: "",
+      username: "",
+      password1: "",
       password2: ""
     }
   };
@@ -31,20 +31,24 @@ class SignUp extends React.Component {
   };
   userSignup = e => {
     e.preventDefault();
-    const creds = {
-      userName: this.state.userName,
-      password1: this.state.password,
-      password2: this.state.password2
-    };
+    console.log(this.state.creds);
+    // const creds = {
+    //   userName: this.state.userName,
+    //   password1: this.state.password,
+    //   password2: this.state.password2
+    // };
     axios
-      .post("/api/register", creds)
+      .post(
+        "https://lambda-mud-test.herokuapp.com/api/registration/",
+        this.state.creds
+      )
       .then(res => {
         console.log(res);
         this.props.history.push("/home");
         localStorage.setItem("token", res.data.key);
         this.setState({
           userName: "",
-          password: "",
+          password1: "",
           password2: ""
         });
       })
@@ -64,14 +68,14 @@ class SignUp extends React.Component {
                     <p className="h4 text-center py-4">Please Login</p>
                     <MDBInput
                       // icon="envelope"
-                      id="email"
-                      label="Your email"
+                      id="username"
+                      label="Your username"
                       group
-                      type="email"
+                      // type="username"
                       validate
                       error="wrong"
                       success="right"
-                      name="email"
+                      name="username"
                       value={this.state.creds.email}
                       onChange={this.handleChanges}
                     />
@@ -82,14 +86,14 @@ class SignUp extends React.Component {
                       group
                       type="password"
                       validate
-                      name="password"
-                      value={this.state.creds.password}
+                      name="password1"
+                      value={this.state.creds.password1}
                       onChange={this.handleChanges}
                     />
                     <MDBInput
                       // icon="lock"
                       id="password2"
-                      label="Your password"
+                      label="Verify password"
                       group
                       type="password"
                       validate

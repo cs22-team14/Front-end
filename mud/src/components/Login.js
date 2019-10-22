@@ -40,7 +40,7 @@ class Login extends React.Component {
         this.state.creds
       )
       .then(res => {
-        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("token", res.data.key);
         this.props.history.push("/home");
       })
       .catch(err => {
