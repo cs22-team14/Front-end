@@ -6,15 +6,19 @@ import "./App.css";
 import SignUp from "./components/SignUp";
 import Login from "./components/Login";
 import Map from "./components/Map";
+import Landing from "./pages/Landing"
+import NotFound from "./pages/NotFound"
 
 function App() {
   return (
     <div className="App">
-      <h1>Hey!</h1>
+
       <Switch>
-        <Route path="/signup" component={SignUp} />
-        <Route path="/login" component={Login} />
-        <Route path="/home" component={Map} />
+        <Route exact path="/" component={Landing} />
+        <Route exact path="/signup" component={SignUp} />
+        <Route exact path="/login" component={Login} />
+        <Route exact path="/map" component={Map} />
+        <Route component={NotFound} />
       </Switch>
     </div>
   );
