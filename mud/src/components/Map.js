@@ -28,7 +28,7 @@ const Map = props => {
 
   useEffect(() => {
     axiosWithAuth()
-      .get("https://lambda-mud-test.herokuapp.com/api/adv/init")
+      .get("/api/adv/init/")
       .then(res => {
         console.log("GET Player", res);
         setPlayer({
@@ -40,11 +40,12 @@ const Map = props => {
             players: res.data.players
           }
         });
-        return axiosWithAuth().get(
-          "https://lambda-mud-test.herokuapp.com/api/adv/rooms"
-        );
+        return axiosWithAuth().get("/api/adv/rooms/");
       })
       .then(res => {
+        console.log(res);
+        // let data = JSON.parse(res.data);
+        // console.log(data);
         setRooms(res.data);
         generateMap();
       })
@@ -74,7 +75,7 @@ const Map = props => {
 
   const goDirection = direction => {
     axiosWithAuth()
-      .post("https://lambda-mud-test.herokuapp.com/api/adv/move")
+      .post("https://lambda-mud-test.herokuapp.com/api/adv/move/")
       .then(res => {
         console.log(res);
         setPlayer({

@@ -31,12 +31,6 @@ class SignUp extends React.Component {
   };
   userSignup = e => {
     e.preventDefault();
-    console.log(this.state.creds);
-    // const creds = {
-    //   userName: this.state.userName,
-    //   password1: this.state.password,
-    //   password2: this.state.password2
-    // };
     axios
       .post(
         "https://lambda-mud-test.herokuapp.com/api/registration/",
@@ -44,13 +38,13 @@ class SignUp extends React.Component {
       )
       .then(res => {
         console.log(res);
-        this.props.history.push("/home");
-        localStorage.setItem("token", res.data.key);
+        localStorage.setItem("Token", res.data.key);
         this.setState({
           userName: "",
           password1: "",
           password2: ""
         });
+        this.props.history.push("/home");
       })
       .catch(err => {
         console.log(`Error: ${err}`);

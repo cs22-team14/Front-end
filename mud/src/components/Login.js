@@ -1,6 +1,5 @@
 import React from "react";
 import axios from "axios";
-import axiosWithAuth from "../utils/axiosWithAuth";
 
 import {
   MDBContainer,
@@ -32,15 +31,13 @@ class Login extends React.Component {
 
   login = e => {
     e.preventDefault();
-    console.log("logging in");
-    console.log(this.state.creds);
     axios
       .post(
         "https://lambda-mud-test.herokuapp.com/api/login/",
         this.state.creds
       )
       .then(res => {
-        localStorage.setItem("token", res.data.key);
+        localStorage.setItem("Token", res.data.key);
         this.props.history.push("/home");
       })
       .catch(err => {
