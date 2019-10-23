@@ -60,7 +60,7 @@ class SignUp extends React.Component {
               <MDBCard>
                 <MDBCardBody>
                   <form onSubmit={e => this.userSignup(e)}>
-                    <p className="h4 text-center py-4">Please Login</p>
+                    <p className="h4 text-center py-4">Signup</p>
                     <MDBInput
                       // icon="envelope"
                       id="username"
