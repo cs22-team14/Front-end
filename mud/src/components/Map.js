@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 // Material UI imports
 import Fab from "@material-ui/core/Fab";
+import Button from "@material-ui/core/Button";
 import {
   ArrowBack,
   ArrowDownward,
@@ -8,6 +9,7 @@ import {
   ArrowUpward
 } from "@material-ui/icons";
 
+import { sampleRooms } from "../utils/sampleData";
 import Room from "./Room";
 import axiosWithAuth from "../utils/axiosWithAuth";
 
@@ -17,16 +19,17 @@ const Map = props => {
   const [player, setPlayer] = useState({
     id: "",
     name: "",
+    players: [],
     currentRoom: {
       title: "",
-      description: "",
-      players: ""
+      description: ""
     }
   });
   const [grid, setGrid] = useState([]);
   const [rooms, setRooms] = useState([]);
 
   useEffect(() => {
+    setRooms(sampleRooms.rooms); // test data
     axiosWithAuth()
       .get("/api/adv/init/")
       .then(res => {
@@ -34,43 +37,50 @@ const Map = props => {
         setPlayer({
           id: res.data.uuid,
           name: res.data.name,
+          players: res.data.players,
           currentRoom: {
             title: res.data.title,
-            description: res.data.description,
-            players: res.data.players
+            description: res.data.description
           }
         });
-        return axiosWithAuth().get("/api/adv/rooms/");
-      })
-      .then(res => {
-        console.log(res);
-        // let data = JSON.parse(res.data);
-        // console.log(data);
-        setRooms(res.data);
+        //     return axiosWithAuth().get("/api/adv/rooms/");
         generateMap();
       })
+      //   .then(res => {
+      //     console.log(res);
+      //     // let data = JSON.parse(res.data);
+      //     // console.log(data);
+      //     setRooms(res.data);
+      //     generateMap();
+      //   })
       .catch(err => {
         console.log(err);
       });
   }, []);
 
   const generateMap = () => {
-    let grid = [];
+    let grid1 = [];
     let counter = 0;
 
-    for (let x = 0; x < 20; x++) {
-      grid[x] = [];
-      for (let y = 0; y < 20; y++) {
-        grid[x][y] = null;
+    for (let x = 0; x < 11; x++) {
+      grid1[x] = [];
+      for (let y = 0; y < 11; y++) {
+        grid1[x][y] = null;
       }
     }
-    for (let x = 0; x < 20; x++) {
-      for (let y = 0; y < 20; y++) {
-        grid[rooms[counter].y][rooms[counter].x] = rooms[counter];
+    console.log(grid1);
+    for (let x = 0; x < 11; x++) {
+      for (let y = 0; y < 11; y++) {
+        console.log(counter);
+        console.log(rooms);
+        // Change line below once endpoints work
+        grid1[sampleRooms.rooms[counter].y][sampleRooms.rooms[counter].x] =
+          sampleRooms.rooms[counter];
         counter++;
       }
     }
-    setGrid(grid);
+    console.log(grid1);
+    setGrid(grid1);
   };
 
   const goDirection = direction => {
@@ -122,9 +132,15 @@ const Map = props => {
     goDirection(west);
   };
 
+  const logOut = () => {
+    localStorage.removeItem("Token");
+    window.location.reload(false);
+    props.history.push("/login");
+  };
+
   return (
     <div className="map-wrapper">
-      <div className="grid-wrapper">
+      {/* <div className="grid-wrapper">
         <div className="grid">
           {grid.length > 0 ? (
             grid.map(row => {
@@ -136,15 +152,17 @@ const Map = props => {
             <p>Still Loading</p>
           )}
         </div>
-      </div>
+      </div> */}
       <div className="control-panel">
-        {/* <button
-          style={{ marginTop: "80px", width: "200px", height: "50px" }}
-          onClick={this.logOut}
+        <Button
+          variant="contained"
+          color="primary"
+          fullWidth
+          onClick={e => logOut()}
         >
           {" "}
           Log Out{" "}
-        </button> */}
+        </Button>
 
         <div className="directions">
           <Fab size="medium" color="secondary" onClick={() => goNorth()}>
@@ -173,28 +191,18 @@ const Map = props => {
           </Fab>
         </div>
 
-        {/* <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "flex-start",
-            marginTop: "80px",
-            maxWidth: "240px"
-          }}
-        >
-          <h6> My Player: {this.state.name}</h6>
-          <h6> Room: {this.state.title}</h6>
-          <h6> Description: {this.state.description}</h6>
+        <div className="game-info">
+          <h6> My Player: {player.name}</h6>
+          <h6> Room: {player.currentRoom.title}</h6>
+          <h6> Description: {player.currentRoom.description}</h6>
           <h6>
             {" "}
             Players in the Room:{" "}
-            {this.state.players.map(player => (
+            {player.players.map(player => (
               <>{player}, </>
             ))}
           </h6>
-          <h6> {this.state.error_msg} </h6>
-        </div> */}
+        </div>
       </div>
     </div>
   );

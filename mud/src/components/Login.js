@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import Navigation from "./Navigation"
+import Navigation from "./Navigation";
 
 import {
   MDBContainer,
@@ -38,7 +38,7 @@ class Login extends React.Component {
         this.state.creds
       )
       .then(res => {
-        localStorage.setItem("Token", res.data.key);
+        localStorage.setItem("token", res.data.key);
         this.props.history.push("/home");
       })
       .catch(err => {
@@ -89,8 +89,8 @@ class Login extends React.Component {
               </MDBCard>
             </MDBCol>
           </MDBRow>
-        </MDBContainer >
-      </div >
+        </MDBContainer>
+      </div>
     );
   }
 }

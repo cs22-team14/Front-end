@@ -8,10 +8,10 @@ export default function Room(props) {
     setRoom(props.room);
   }, []);
 
-  let borderRight = room.e_to === 0 ? "5px solid dodgerblue" : "5px solid red";
-  let borderLeft = room.w_to === 0 ? "5px solid dodgerblue" : "5px solid red";
-  let borderTop = room.n_to === 0 ? "5px solid dodgerblue" : "5px solid red";
-  let borderBottom = room.s_to === 0 ? "5px solid dodgerblue" : "5px solid red";
+  let borderRight = room.e === 0 ? "5px solid dodgerblue" : "5px solid red";
+  let borderLeft = room.w === 0 ? "5px solid dodgerblue" : "5px solid red";
+  let borderTop = room.n === 0 ? "5px solid dodgerblue" : "5px solid red";
+  let borderBottom = room.s === 0 ? "5px solid dodgerblue" : "5px solid red";
 
   let background = props.id === room.id ? "black" : "lightgrey";
 

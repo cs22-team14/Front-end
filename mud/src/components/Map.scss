@@ -27,5 +27,13 @@
       align-items: center;
       margin-top: 100px;
     }
+    .game-info {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      margin-top: 80px;
+      max-width: 240px;
+    }
   }
 }
