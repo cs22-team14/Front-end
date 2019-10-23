@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
+import Navigation from "./Navigation"
 
-// still need to convert to hooks / functional
 import {
   MDBContainer,
   MDBRow,
@@ -53,6 +53,7 @@ class SignUp extends React.Component {
   render() {
     return (
       <div className="signup-container">
+        <Navigation />
         <MDBContainer>
           <MDBRow>
             <MDBCol>

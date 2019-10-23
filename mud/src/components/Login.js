@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import Navigation from "./Navigation"
 
 import {
   MDBContainer,
@@ -48,6 +49,7 @@ class Login extends React.Component {
   render() {
     return (
       <div className="login-container">
+        <Navigation />
         <MDBContainer>
           <MDBRow>
             <MDBCol>
@@ -87,8 +89,8 @@ class Login extends React.Component {
               </MDBCard>
             </MDBCol>
           </MDBRow>
-        </MDBContainer>
-      </div>
+        </MDBContainer >
+      </div >
     );
   }
 }
