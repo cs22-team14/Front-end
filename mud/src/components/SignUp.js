@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import Navigation from "./Navigation"
+import Navigation from "./Navigation";
 
 import {
   MDBContainer,
@@ -33,7 +33,7 @@ class SignUp extends React.Component {
     e.preventDefault();
     axios
       .post(
-        "https://lambda-mud-test.herokuapp.com/api/registration/",
+        "https://adventure14.herokuapp.com/api/registration/",
         this.state.creds
       )
       .then(res => {

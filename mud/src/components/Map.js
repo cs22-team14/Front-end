@@ -71,8 +71,8 @@ const Map = props => {
     console.log(grid1);
     for (let x = 0; x < 11; x++) {
       for (let y = 0; y < 11; y++) {
-        console.log(counter);
-        console.log(rooms);
+        // console.log(counter);
+        // console.log(rooms);
         // Change line below once endpoints work
         grid1[sampleRooms.rooms[counter].y][sampleRooms.rooms[counter].x] =
           sampleRooms.rooms[counter];
@@ -85,14 +85,17 @@ const Map = props => {
 
   const goDirection = direction => {
     axiosWithAuth()
-      .post("https://lambda-mud-test.herokuapp.com/api/adv/move/")
+      .post("/api/adv/move/", direction)
       .then(res => {
         console.log(res);
         setPlayer({
-          id: res.data.id,
+          id: res.data.uuid,
           name: res.data.name,
-          title: res.data.title,
-          currentRoom: res.data.currentRoom
+          players: res.data.players,
+          currentRoom: {
+            title: res.data.title,
+            description: res.data.description
+          }
         });
       })
       .catch(err => {
@@ -133,8 +136,8 @@ const Map = props => {
   };
 
   const logOut = () => {
-    localStorage.removeItem("Token");
-    window.location.reload(false);
+    localStorage.removeItem("token");
+    // window.location.reload(false);
     props.history.push("/login");
   };
 

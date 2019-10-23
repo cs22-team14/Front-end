@@ -33,10 +33,7 @@ class Login extends React.Component {
   login = e => {
     e.preventDefault();
     axios
-      .post(
-        "https://lambda-mud-test.herokuapp.com/api/login/",
-        this.state.creds
-      )
+      .post("https://adventure14.herokuapp.com/api/login/", this.state.creds)
       .then(res => {
         localStorage.setItem("token", res.data.key);
         this.props.history.push("/home");
