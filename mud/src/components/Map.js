@@ -140,19 +140,19 @@ const Map = props => {
 
   return (
     <div className="map-wrapper">
-      {/* <div className="grid-wrapper">
+      <div className="grid-wrapper">
         <div className="grid">
           {grid.length > 0 ? (
             grid.map(row => {
               return row.map(room => {
-                return <Room room={room} id={rooms.id} />; // pass active id
+                return <Room room={room} playerId={player.id} />; // pass active id
               });
             })
           ) : (
             <p>Still Loading</p>
           )}
         </div>
-      </div> */}
+      </div>
       <div className="control-panel">
         <Button
           variant="contained"
@@ -165,7 +165,7 @@ const Map = props => {
         </Button>
 
         <div className="directions">
-          <Fab size="medium" color="secondary" onClick={() => goNorth()}>
+          <Fab size="medium" color="secondary" onClick={e => goNorth(e)}>
             <ArrowUpward />
           </Fab>
           <div>
@@ -173,7 +173,7 @@ const Map = props => {
               size="medium"
               color="secondary"
               style={{ marginRight: "20px" }}
-              onClick={() => goWest()}
+              onClick={e => goWest(e)}
             >
               <ArrowBack />
             </Fab>
@@ -181,12 +181,12 @@ const Map = props => {
               size="medium"
               color="secondary"
               style={{ marginLeft: "20px" }}
-              onClick={() => goEast()}
+              onClick={e => goEast(e)}
             >
               <ArrowForward />
             </Fab>
           </div>
-          <Fab size="medium" color="secondary" onClick={() => goSouth()}>
+          <Fab size="medium" color="secondary" onClick={e => goSouth(e)}>
             <ArrowDownward />
           </Fab>
         </div>
