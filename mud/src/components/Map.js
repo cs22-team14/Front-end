@@ -48,7 +48,6 @@ const Map = props => {
         return axiosWithAuth().get("/api/adv/get_rooms/");
       })
       .then(res => {
-        console.log(res);
         setRooms(res.data.rooms);
         // generateMap();
       })
@@ -59,7 +58,6 @@ const Map = props => {
 
   useEffect(() => {
     if (rooms.length > 0) {
-      console.log(rooms);
       generateMap();
     }
   }, [rooms]);
@@ -74,23 +72,16 @@ const Map = props => {
         grid1[x][y] = null;
       }
     }
-    console.log(grid1);
     for (let x = 0; x < 11; x++) {
       for (let y = 0; y < 11; y++) {
-        // console.log(counter);
-        // console.log(rooms);
-        // console.log(rooms[counter]);
-        // Change line below once endpoints work
         grid1[x][y] = rooms[counter];
         counter++;
       }
     }
-    console.log(grid1);
     setGrid(grid1);
   };
 
   const goDirection = direction => {
-    console.log(direction);
     axiosWithAuth()
       .post("/api/adv/move/", direction)
       .then(res => {
