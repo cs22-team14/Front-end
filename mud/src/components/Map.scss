@@ -6,12 +6,13 @@
     display: flex;
     justify-content: center;
     flex-wrap: wrap-reverse;
+    margin-top: 100px;
     .grid {
       width: 550px;
       height: 550px;
       display: flex;
       justify-content: center;
-      flex-wrap: wrap-reverse;
+      flex-wrap: wrap;
     }
   }
   .control-panel {

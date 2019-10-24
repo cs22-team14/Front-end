@@ -9,7 +9,7 @@ import {
   ArrowUpward
 } from "@material-ui/icons";
 
-import { sampleRooms } from "../utils/sampleData";
+// import { sampleRooms } from "../utils/sampleData";
 import Room from "./Room";
 import axiosWithAuth from "../utils/axiosWithAuth";
 
@@ -22,14 +22,15 @@ const Map = props => {
     players: [],
     currentRoom: {
       title: "",
-      description: ""
+      description: "",
+      id: null
     }
   });
   const [grid, setGrid] = useState([]);
   const [rooms, setRooms] = useState([]);
 
   useEffect(() => {
-    setRooms(sampleRooms.rooms); // test data
+    // setRooms(sampleRooms.rooms); // test data
     axiosWithAuth()
       .get("/api/adv/init/")
       .then(res => {
@@ -40,23 +41,28 @@ const Map = props => {
           players: res.data.players,
           currentRoom: {
             title: res.data.title,
-            description: res.data.description
+            description: res.data.description,
+            id: res.data.current_room
           }
         });
-        //     return axiosWithAuth().get("/api/adv/rooms/");
-        generateMap();
+        return axiosWithAuth().get("/api/adv/get_rooms/");
       })
-      //   .then(res => {
-      //     console.log(res);
-      //     // let data = JSON.parse(res.data);
-      //     // console.log(data);
-      //     setRooms(res.data);
-      //     generateMap();
-      //   })
+      .then(res => {
+        console.log(res);
+        setRooms(res.data.rooms);
+        // generateMap();
+      })
       .catch(err => {
         console.log(err);
       });
   }, []);
+
+  useEffect(() => {
+    if (rooms.length > 0) {
+      console.log(rooms);
+      generateMap();
+    }
+  }, [rooms]);
 
   const generateMap = () => {
     let grid1 = [];
@@ -73,9 +79,9 @@ const Map = props => {
       for (let y = 0; y < 11; y++) {
         // console.log(counter);
         // console.log(rooms);
+        // console.log(rooms[counter]);
         // Change line below once endpoints work
-        grid1[sampleRooms.rooms[counter].y][sampleRooms.rooms[counter].x] =
-          sampleRooms.rooms[counter];
+        grid1[x][y] = rooms[counter];
         counter++;
       }
     }
@@ -84,6 +90,7 @@ const Map = props => {
   };
 
   const goDirection = direction => {
+    console.log(direction);
     axiosWithAuth()
       .post("/api/adv/move/", direction)
       .then(res => {
@@ -94,7 +101,8 @@ const Map = props => {
           players: res.data.players,
           currentRoom: {
             title: res.data.title,
-            description: res.data.description
+            description: res.data.description,
+            id: res.data.current_room
           }
         });
       })
@@ -148,7 +156,9 @@ const Map = props => {
           {grid.length > 0 ? (
             grid.map(row => {
               return row.map(room => {
-                return <Room room={room} playerId={player.id} />; // pass active id
+                return (
+                  <Room room={room} playerRoomId={player.currentRoom.id} />
+                ); // pass active id
               });
             })
           ) : (
