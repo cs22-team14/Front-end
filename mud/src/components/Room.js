@@ -2,13 +2,16 @@ import React, { useState, useEffect } from "react";
 import "./Room.scss";
 
 export default function Room(props) {
-  let borderRight = props.room.e > 0 ? "5px solid dodgerblue" : "5px solid red";
-  let borderLeft = props.room.w > 0 ? "5px solid dodgerblue" : "5px solid red";
-  let borderTop = props.room.n > 0 ? "5px solid dodgerblue" : "5px solid red";
+  let borderRight =
+    props.room.e_to > 0 ? "5px solid dodgerblue" : "5px solid red";
+  let borderLeft =
+    props.room.w_to > 0 ? "5px solid dodgerblue" : "5px solid red";
+  let borderTop =
+    props.room.n_to > 0 ? "5px solid dodgerblue" : "5px solid red";
   let borderBottom =
-    props.room.s > 0 ? "5px solid dodgerblue" : "5px solid red";
+    props.room.s_to > 0 ? "5px solid dodgerblue" : "5px solid red";
 
-  let background = props.playerId === props.room.id ? "black" : "lightgrey";
+  let background = props.playerRoomId === props.room.id ? "black" : "lightgrey";
 
   return (
     <div

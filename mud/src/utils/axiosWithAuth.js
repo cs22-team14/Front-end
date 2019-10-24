@@ -8,7 +8,7 @@ const axiosWithAuth = () => {
     headers: {
       Authorization: "Token " + token
     },
-    baseURL: "https://lambda-mud-test.herokuapp.com" // Lambda MUD Test Server
+    baseURL: "https://adventure14.herokuapp.com" // Lambda MUD Test Server
   });
 };
 
