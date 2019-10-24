@@ -38,13 +38,13 @@ class SignUp extends React.Component {
       )
       .then(res => {
         console.log(res);
-        localStorage.setItem("Token", res.data.key);
+        // localStorage.setItem("Token", res.data.key);
         this.setState({
           userName: "",
           password1: "",
           password2: ""
         });
-        this.props.history.push("/home");
+        this.props.history.push("/login");
       })
       .catch(err => {
         console.log(`Error: ${err}`);
